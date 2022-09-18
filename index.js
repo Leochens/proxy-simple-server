@@ -14,6 +14,13 @@ app.get('/pac', function (req, res) {
     const {
         id,
     } = req.query
+
+    if(!id){
+        return res.json({err:'缺少id'})
+    }
+    if(!Object.keys(db).includes(id)){
+        return res.json({err:'id不存在'})
+    }
     res.setHeader('content-type',"text/html; charset=utf-8")
     // 此处还可以针对不同host进行定向代理
     // function FindProxyForURL(url, host){
@@ -37,6 +44,9 @@ app.get('/set', function (req, res) {
         ip,
         port
     } = req.query
+    if(!id || !ip || !port){
+        return res.json({err:'id ip port 都需要提供！'})   
+    }
     console.log(ip, port)
     db[id] = {
         ip,
